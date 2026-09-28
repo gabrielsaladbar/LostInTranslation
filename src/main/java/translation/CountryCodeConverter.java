@@ -4,10 +4,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * This class provides the service of converting country codes to their names and back.
@@ -41,7 +38,10 @@ public class CountryCodeConverter {
             while (iterator.hasNext()) {
                 String line = iterator.next();
                 String[] parts = line.split("\t");
-                // TODO Task B: use parts to populate the instance variables
+
+                // adds country and its code to both hashmaps
+                countryCodeToCountry.put(parts[2].trim().toLowerCase(), parts[0].trim());
+                countryToCountryCode.put(parts[0].trim(), parts[2].trim().toLowerCase());
             }
         }
         catch (IOException | URISyntaxException ex) {
@@ -56,8 +56,7 @@ public class CountryCodeConverter {
      * @return the name of the country corresponding to the code
      */
     public String fromCountryCode(String code) {
-        // TODO Task B: update this code to use an instance variable to return the correct value
-        return code;
+        return countryCodeToCountry.get(code);
     }
 
     /**
@@ -66,8 +65,7 @@ public class CountryCodeConverter {
      * @return the 3-letter code of the country
      */
     public String fromCountry(String country) {
-        // TODO Task B: update this code to use an instance variable to return the correct value
-        return country;
+        return countryToCountryCode.get(country);
     }
 
     /**
@@ -75,7 +73,6 @@ public class CountryCodeConverter {
      * @return how many countries are included in this country code converter.
      */
     public int getNumCountries() {
-        // TODO Task B: update this code to use an instance variable to return the correct value
-        return 0;
+        return Math.max(countryCodeToCountry.size(), countryToCountryCode.size());
     }
 }
